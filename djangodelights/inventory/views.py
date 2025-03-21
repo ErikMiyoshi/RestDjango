@@ -114,3 +114,23 @@ class PurchaseDelete(DeleteView):
     model = Purchase
     template_name = "inventory/purchase_delete_form.html"
     success_url = "/purchase/list"
+
+#Revnue, Cost, Profit
+def Finance(request):
+    cost = 0
+    revenue = 0
+    for purchase in Purchase.objects.all():
+        revenue += purchase.menuitem.price
+
+        for recipe in purchase.menuitem.reciperequirement_set.all():
+            cost += recipe.ingredient.price * recipe.quantity
+    profit = revenue - cost
+
+    context = {
+        "cost" : cost,
+        "revenue": revenue,
+        "profit": profit,
+    }
+
+    return render(request, "inventory/finance.html", context)
+

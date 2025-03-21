@@ -24,4 +24,6 @@ urlpatterns = [
     path('purchase/create', views.PurchaseCreate.as_view(), name='purchasecreate'),
     path('purchase/<pk>/update', views.PurchaseUpdate.as_view(), name='purchaseupdate'),
     path('purchase/<pk>/delete', views.PurchaseDelete.as_view(), name='purchasedelete'),
+
+    path('finance', views.Finance, name='finance'),
 ]
