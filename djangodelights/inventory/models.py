@@ -6,6 +6,9 @@ class Ingredient(models.Model):
         ('KG', 'Kilograma'),
     ]    
     name = models.CharField(max_length = 30, null=False, blank=False)
-    quantity = models.FloatField()
+    # quantity = models.FloatField()
     unit = models.CharField(max_length = 2, choices=UNIT_CHOICES, default="KG")
     price = models.FloatField()  # price per unit
+
+    def get_absolute_url(self):
+        return '/ingredient/list'
