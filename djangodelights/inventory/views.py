@@ -1,6 +1,11 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 
 from .forms import IngredientCreateForm, IngredientUpdateForm, IngredientRestockForm
 from .forms import MenuItemCreateForm, MenuItemUpdateForm
@@ -8,6 +13,18 @@ from .forms import RecipeRequirementCreateForm, RecipeRequirementUpdateForm
 from .forms import PurchaseCreateForm, PurchaseUpdateForm
 
 from .models import Ingredient, MenuItem, RecipeRequirement, Purchase
+
+from django.urls import reverse_lazy
+
+
+def logout_view(request):
+  logout(request)
+  return redirect('home')
+
+class SignUp(CreateView):
+  form_class = UserCreationForm
+  success_url = reverse_lazy("login")
+  template_name = "registration/signup.html"
 
 
 # Create your views here.
@@ -18,21 +35,22 @@ def home(request):
 class IngredientList(ListView):
     model = Ingredient
 
-class IngredientCreate(CreateView):
+class IngredientCreate(LoginRequiredMixin, CreateView):
     model = Ingredient
     template_name = "inventory/ingredient_create_form.html"
     form_class = IngredientCreateForm
 
-class IngredientUpdate(UpdateView):
+class IngredientUpdate(LoginRequiredMixin, UpdateView):
     model = Ingredient
     template_name = "inventory/ingredient_update_form.html"
     form_class = IngredientUpdateForm
 
-class IngredientDelete(DeleteView):
+class IngredientDelete(LoginRequiredMixin, DeleteView):
     model = Ingredient
     template_name = "inventory/ingredient_delete_form.html"
     success_url = "/ingredient/list"
 
+@login_required
 def IngredientRestock(request, pk):
     ingredient = Ingredient.objects.get(id=pk)
     current_quantity = ingredient.quantity
@@ -61,17 +79,17 @@ def IngredientRestock(request, pk):
 class MenuItemList(ListView):
     model = MenuItem
 
-class MenuItemCreate(CreateView):
+class MenuItemCreate(LoginRequiredMixin, CreateView):
     model = MenuItem
     template_name = "inventory/menuitem_create_form.html"
     form_class = MenuItemCreateForm
 
-class MenuItemUpdate(UpdateView):
+class MenuItemUpdate(LoginRequiredMixin, UpdateView):
     model = MenuItem
     template_name = "inventory/menuitem_update_form.html"
     form_class = MenuItemUpdateForm
 
-class MenuItemDelete(DeleteView):
+class MenuItemDelete(LoginRequiredMixin, DeleteView):
     model = MenuItem
     template_name = "inventory/menuitem_delete_form.html"
     success_url = "/menuitem/list"
@@ -80,17 +98,17 @@ class MenuItemDelete(DeleteView):
 class RecipeRequirementList(ListView):
     model = RecipeRequirement
 
-class RecipeRequirementCreate(CreateView):
+class RecipeRequirementCreate(LoginRequiredMixin, CreateView):
     model = RecipeRequirement
     template_name = "inventory/reciperequirement_create_form.html"
     form_class = RecipeRequirementCreateForm
 
-class RecipeRequirementUpdate(UpdateView):
+class RecipeRequirementUpdate(LoginRequiredMixin, UpdateView):
     model = RecipeRequirement
     template_name = "inventory/reciperequirement_update_form.html"
     form_class = RecipeRequirementUpdateForm
 
-class RecipeRequirementDelete(DeleteView):
+class RecipeRequirementDelete(LoginRequiredMixin, DeleteView):
     model = RecipeRequirement
     template_name = "inventory/reciperequirement_delete_form.html"
     success_url = "/reciperequirement/list"
@@ -100,22 +118,23 @@ class RecipeRequirementDelete(DeleteView):
 class PurchaseList(ListView):
     model = Purchase
 
-class PurchaseCreate(CreateView):
+class PurchaseCreate(LoginRequiredMixin, CreateView):
     model = Purchase
     template_name = "inventory/purchase_create_form.html"
     form_class = PurchaseCreateForm
 
-class PurchaseUpdate(UpdateView):
+class PurchaseUpdate(LoginRequiredMixin, UpdateView):
     model = Purchase
     template_name = "inventory/purchase_update_form.html"
     form_class = PurchaseUpdateForm
 
-class PurchaseDelete(DeleteView):
+class PurchaseDelete(LoginRequiredMixin, DeleteView):
     model = Purchase
     template_name = "inventory/purchase_delete_form.html"
     success_url = "/purchase/list"
 
 #Revnue, Cost, Profit
+
 def Finance(request):
     cost = 0
     revenue = 0
