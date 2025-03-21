@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Delete RecipeRequirement</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <p>Do you really want to remove {{ ingredient.name }} from {{ menuitem.name }} ? </p>
+    <input type='submit' value='Submit' />
+</form>
+
+{% endblock %}

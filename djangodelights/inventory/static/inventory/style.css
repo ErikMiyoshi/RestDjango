@@ -25,3 +25,8 @@
     background-color: #04AA6D;
     color: white;
 }
+
+
+table, th, td, tr {
+    border: 1px solid black;
+}

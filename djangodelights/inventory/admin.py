@@ -1,6 +1,7 @@
 from django.contrib import admin
-from .models import Ingredient, MenuItem
+from .models import Ingredient, MenuItem, RecipeRequirement
 
-# Register your models here.
+# Correct model registrations
 admin.site.register(Ingredient)
 admin.site.register(MenuItem)
+admin.site.register(RecipeRequirement)

@@ -1,11 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from .forms import IngredientCreateForm, IngredientUpdateForm
 from .forms import MenuItemCreateForm, MenuItemUpdateForm
+from .forms import RecipeRequirementCreateForm, RecipeRequirementUpdateForm
 
-from .models import Ingredient, MenuItem
+from .models import Ingredient, MenuItem, RecipeRequirement
 
 
 # Create your views here.
@@ -50,3 +51,22 @@ class MenuItemDelete(DeleteView):
     model = MenuItem
     template_name = "inventory/menuitem_delete_form.html"
     success_url = "/menuitem/list"
+
+# Recipe Requirement Views
+class RecipeRequirementList(ListView):
+    model = RecipeRequirement
+
+class RecipeRequirementCreate(CreateView):
+    model = RecipeRequirement
+    template_name = "inventory/reciperequirement_create_form.html"
+    form_class = RecipeRequirementCreateForm
+
+class RecipeRequirementUpdate(UpdateView):
+    model = RecipeRequirement
+    template_name = "inventory/reciperequirement_update_form.html"
+    form_class = RecipeRequirementUpdateForm
+
+class RecipeRequirementDelete(DeleteView):
+    model = RecipeRequirement
+    template_name = "inventory/reciperequirement_delete_form.html"
+    success_url = "/reciperequirement/list"

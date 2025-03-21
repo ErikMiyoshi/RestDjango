@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import path
 from . import views
 
 urlpatterns = [
@@ -14,4 +14,8 @@ urlpatterns = [
     path('menuitem/<pk>/update', views.MenuItemUpdate.as_view(), name='menuitemupdate'),
     path('menuitem/<pk>/delete', views.MenuItemDelete.as_view(), name='menuitemdelete'),
 
+    path('reciperequirement/list', views.RecipeRequirementList.as_view(), name='reciperequirementlist'),
+    path('reciperequirement/create', views.RecipeRequirementCreate.as_view(), name='reciperequirementcreate'),
+    path('reciperequirement/<pk>/update', views.RecipeRequirementUpdate.as_view(), name='reciperequirementupdate'),
+    path('reciperequirement/<pk>/delete', views.RecipeRequirementDelete.as_view(), name='reciperequirementdelete'),
 ]
