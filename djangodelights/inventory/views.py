@@ -5,8 +5,9 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .forms import IngredientCreateForm, IngredientUpdateForm
 from .forms import MenuItemCreateForm, MenuItemUpdateForm
 from .forms import RecipeRequirementCreateForm, RecipeRequirementUpdateForm
+from .forms import PurchaseCreateForm, PurchaseUpdateForm
 
-from .models import Ingredient, MenuItem, RecipeRequirement
+from .models import Ingredient, MenuItem, RecipeRequirement, Purchase
 
 
 # Create your views here.
@@ -32,6 +33,10 @@ class IngredientDelete(DeleteView):
     model = Ingredient
     template_name = "inventory/ingredient_delete_form.html"
     success_url = "/ingredient/list"
+
+def IngredientRestock(request, pk):
+
+    return render(request, "inventory/ingredient_restock.html")
 
 # MenuItem Views
 class MenuItemList(ListView):
@@ -70,3 +75,23 @@ class RecipeRequirementDelete(DeleteView):
     model = RecipeRequirement
     template_name = "inventory/reciperequirement_delete_form.html"
     success_url = "/reciperequirement/list"
+
+
+#Purchase Views
+class PurchaseList(ListView):
+    model = Purchase
+
+class PurchaseCreate(CreateView):
+    model = Purchase
+    template_name = "inventory/purchase_create_form.html"
+    form_class = PurchaseCreateForm
+
+class PurchaseUpdate(UpdateView):
+    model = Purchase
+    template_name = "inventory/purchase_update_form.html"
+    form_class = PurchaseUpdateForm
+
+class PurchaseDelete(DeleteView):
+    model = Purchase
+    template_name = "inventory/purchase_delete_form.html"
+    success_url = "/purchase/list"

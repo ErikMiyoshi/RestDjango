@@ -18,4 +18,9 @@ urlpatterns = [
     path('reciperequirement/create', views.RecipeRequirementCreate.as_view(), name='reciperequirementcreate'),
     path('reciperequirement/<pk>/update', views.RecipeRequirementUpdate.as_view(), name='reciperequirementupdate'),
     path('reciperequirement/<pk>/delete', views.RecipeRequirementDelete.as_view(), name='reciperequirementdelete'),
+
+    path('purchase/list', views.PurchaseList.as_view(), name='purchaselist'),
+    path('purchase/create', views.PurchaseCreate.as_view(), name='purchasecreate'),
+    path('purchase/<pk>/update', views.PurchaseUpdate.as_view(), name='purchaseupdate'),
+    path('purchase/<pk>/delete', views.PurchaseDelete.as_view(), name='purchasedelete'),
 ]

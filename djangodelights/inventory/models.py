@@ -40,3 +40,13 @@ class RecipeRequirement(models.Model):
     
     def __str__(self):
         return self.menuitem.name
+    
+class Purchase(models.Model):
+    menuitem = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def get_absolute_url(self):
+        return '/purchase/list'
+    
+    def __str__(self):
+        return self.menuitem.name + " " + str(self.timestamp)
