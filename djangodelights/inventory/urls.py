@@ -8,6 +8,7 @@ urlpatterns = [
     path('ingredient/create', views.IngredientCreate.as_view(), name='ingredientcreate'),
     path('ingredient/<pk>/update', views.IngredientUpdate.as_view(), name='ingredientupdate'),
     path('ingredient/<pk>/delete', views.IngredientDelete.as_view(), name='ingredientdelete'),
+    path('ingredient/<pk>/restock', views.IngredientRestock, name='ingredientrestock'),
 
     path('menuitem/list', views.MenuItemList.as_view(), name='menuitemlist'),
     path('menuitem/create', views.MenuItemCreate.as_view(), name='menuitemcreate'),

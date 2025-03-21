@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-from .forms import IngredientCreateForm, IngredientUpdateForm
+from .forms import IngredientCreateForm, IngredientUpdateForm, IngredientRestockForm
 from .forms import MenuItemCreateForm, MenuItemUpdateForm
 from .forms import RecipeRequirementCreateForm, RecipeRequirementUpdateForm
 from .forms import PurchaseCreateForm, PurchaseUpdateForm
@@ -13,7 +13,6 @@ from .models import Ingredient, MenuItem, RecipeRequirement, Purchase
 # Create your views here.
 def home(request):
     return render(request, "inventory/home.html")
-
 
 # Ingredient Views
 class IngredientList(ListView):
@@ -35,8 +34,28 @@ class IngredientDelete(DeleteView):
     success_url = "/ingredient/list"
 
 def IngredientRestock(request, pk):
+    ingredient = Ingredient.objects.get(id=pk)
+    current_quantity = ingredient.quantity
 
-    return render(request, "inventory/ingredient_restock.html")
+    if request.method == "POST":
+        form = IngredientRestockForm(request.POST, instance=ingredient)
+        
+        if form.is_valid():
+            restock_quantity = form.cleaned_data['quantity']
+
+            ingredient.quantity = current_quantity + restock_quantity
+            ingredient.save()
+
+            return redirect("/ingredient/list")
+    else:
+        form = IngredientRestockForm()
+        print(form.errors)
+
+    context = { 'form': form, 
+                'ingredient': ingredient,
+    }
+
+    return render(request, "inventory/ingredient_restock.html", context)
 
 # MenuItem Views
 class MenuItemList(ListView):

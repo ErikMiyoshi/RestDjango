@@ -20,6 +20,7 @@
         <td>{{ item.price }}</td>
         <td><a href="{% url 'ingredientupdate' item.id %}"><button>Update</button></a>
             <a href="{% url 'ingredientdelete' item.id %}"><button>Delete</button></a>
+            <a href="{% url 'ingredientrestock' item.id %}"><button>Restock</button></a>
         </td>
     </tr>
         {% endfor %}

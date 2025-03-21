@@ -12,6 +12,15 @@ class IngredientUpdateForm(forms.ModelForm):
         model = Ingredient
         fields = "__all__"
 
+class IngredientRestockForm(forms.ModelForm):
+    class Meta:
+        model = Ingredient
+        fields = ["quantity"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['quantity'].initial = {'quantity': None}
+
 #MenuItem Form
 class MenuItemCreateForm(forms.ModelForm):
     class Meta:
