@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Olá Mundo, test</h1>
-
+<h2>Add Ingredient</h2>
 <form method="POST">
     {% csrf_token %}
     {{ form.as_p }}
